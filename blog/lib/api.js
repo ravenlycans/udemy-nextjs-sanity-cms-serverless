@@ -31,3 +31,11 @@ export async function getAllAuthors() {
 
     return results;
 }
+
+export async function getBlogPostBySlug(slug) {
+    const result = await client
+        .fetch(`*[_type == "blog" && slug.current == $slug]{${blogFields}} | order(publishAt asc)`, {slug})
+        .then(res => res?.[0]);
+
+    return result;
+}
