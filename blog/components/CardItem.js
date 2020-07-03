@@ -3,7 +3,7 @@ import prettyDate from 'pretty-date-js';
 
 
 const CardItem = ({title, subtitle, coverImage, publishAt, author}) => {
-console.log(author);
+
     return (
         <Card className={`fj-card`}>
             <div className="card-body-wrapper">
