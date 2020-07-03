@@ -24,16 +24,10 @@ export async function getStaticProps({params}) {
 export async function getStaticPaths() {
     const blogs = await getAllBlogs();
 
-    var resultObj = {
-        paths: [],
+    return {
+        paths: blogs?.map(blog => ({params: {slug: blog.slug}})),
         fallback: false
     }
-
-    blogs.map(blog => {
-        resultObj.paths.push({params:{slug: blog.slug}});
-    });
-
-    return resultObj;
 }
 
 export default BlogDetail;
