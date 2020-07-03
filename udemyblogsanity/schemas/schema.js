@@ -35,7 +35,7 @@ export default createSchema({
     },
     {
       name: 'blog',
-      title: 'Blog',
+      title: 'BlogPost',
       type: 'document',
       fields: [
         {
