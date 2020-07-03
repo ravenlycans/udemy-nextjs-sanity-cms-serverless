@@ -4,12 +4,18 @@ import AuthorIntro from 'components/AuthorIntro';
 import CardItem from 'components/CardItem';
 import CardListItem from 'components/CardListItem';
 
-import {getAllBlogs} from 'lib/api';
+import {getAllBlogs, getAllAuthors} from 'lib/api';
 
-export default function Home({blogs}) {
+export default function Home({blogs, authors}) {
   return (
     <PageLayout>
-        <AuthorIntro />
+      {
+        authors.map(author =>
+          <AuthorIntro key={author.name}
+            author={author}
+          />
+        )
+      }
         <hr/>
         <Row className="mb-5">
           {/*<Col md="10">
@@ -21,6 +27,9 @@ export default function Home({blogs}) {
                 <CardItem 
                   title={blog.title}
                   subtitle={blog.subtitle}
+                  coverImage={blog.coverImage}
+                  publishAt={blog.publishAt}
+                  author={blog.author}
                 />
               </Col>
               )
@@ -36,9 +45,11 @@ export default function Home({blogs}) {
 // It will create a static page.
 export async function getStaticProps() {
   const blogs = await getAllBlogs();
+  const authors = await getAllAuthors();
   return {
     props: {
-      blogs
+      blogs,
+      authors
     }
   }
 }

@@ -1,27 +1,28 @@
 import { Card }  from 'react-bootstrap';
+import prettyDate from 'pretty-date-js';
 
 
-const CardItem = ({title, subtitle}) => {
-
+const CardItem = ({title, subtitle, coverImage, publishAt, author}) => {
+console.log(author);
     return (
         <Card className={`fj-card`}>
             <div className="card-body-wrapper">
                 <Card.Header
                 className="d-flex flex-row">
                 <img
-                    src={'https://via.placeholder.com/150'}
+                    src={author.avatarUrl ? author.avatarUrl : 'https://placekitten.com/50'}
                     className="rounded-circle mr-3"
                     height="50px"
                     width="50px"
                     alt="avatar"/>
                 <div>
-                    <Card.Title className="font-weight-bold mb-1">Placeholder Author</Card.Title>
-                    <Card.Text className="card-date">Placeholder Date</Card.Text>
+                    <Card.Title className="font-weight-bold mb-1">{author.name}</Card.Title>
+                    <Card.Text className="card-date">Published: {prettyDate(publishAt).value + ' ' + prettyDate(publishAt).lang + ' ' + prettyDate(publishAt).misc}</Card.Text>
                 </div>
                 </Card.Header>
                 <div className="view overlay">
                 <Card.Img
-                    src='https://via.placeholder.com/250'
+                    src={coverImage}
                     alt="Card image cap"
                 />
                 </div>

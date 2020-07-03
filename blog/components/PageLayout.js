@@ -11,7 +11,7 @@ export default function PageLayout({children,className}) {
             </div>
             <footer className="page-footer">
                 <div>
-                    <a href="#">github</a>
+                    <a href="https://github.com/silverlycan/" target="_blank">github</a>
                 </div>
             </footer>            
         </Container>
