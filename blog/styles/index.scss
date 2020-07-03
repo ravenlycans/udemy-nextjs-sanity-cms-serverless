@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,900;1,400;1,600&display=swap');
 
 html, body {
     height: 100%;
@@ -137,6 +138,8 @@ html, body {
   }
   
   // HEADER STARTS
+  
+
   .fj-navbar.fj-nav-base {
     width: 100%;
     padding: 20px 0px;
@@ -149,14 +152,19 @@ html, body {
         letter-spacing: 1px;
         font-weight: bold;
       }
-  
+
       &-item {
         margin-left: 10px;
         margin-right: 10px;
       }
+
+      &-brand-link {
+        color: rgba(0, 0, 0, 0.8);
+        font-weight: 900;
+      }
   
       &-link {
-        color: black;
+        color: rgb(0,0,0);
         letter-spacing: 0.8px;
         font-size: 18px;
         text-transform: uppercase;

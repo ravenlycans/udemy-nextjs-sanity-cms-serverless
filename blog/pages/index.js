@@ -30,6 +30,10 @@ export default function Home({blogs, authors}) {
                   coverImage={blog.coverImage}
                   publishAt={blog.publishAt}
                   author={blog.author}
+                  link={{
+                    href:'/blogs/[slug]',
+                    as:`/blogs/${blog.slug}`
+                  }}
                 />
               </Col>
               )

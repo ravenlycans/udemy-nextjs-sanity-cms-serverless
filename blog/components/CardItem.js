@@ -1,8 +1,9 @@
 import { Card }  from 'react-bootstrap';
+import Link from 'next/link';
 import prettyDate from 'pretty-date-js';
 
 
-const CardItem = ({title, subtitle, coverImage, publishAt, author}) => {
+const CardItem = ({title, subtitle, coverImage, link, publishAt, author}) => {
 
     return (
         <Card className={`fj-card`}>
@@ -31,9 +32,13 @@ const CardItem = ({title, subtitle, coverImage, publishAt, author}) => {
                 <Card.Text>{subtitle}</Card.Text>
                 </Card.Body>
             </div>
-            <a className="card-button">
-                Read More
-            </a>
+            { link && 
+                <Link {...link}>
+                    <a className="card-button">
+                        Read More
+                    </a>
+                </Link>
+            }
         </Card>
     );
 }
