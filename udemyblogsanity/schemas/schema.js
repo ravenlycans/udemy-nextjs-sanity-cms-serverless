@@ -37,11 +37,15 @@ export default createSchema({
       name: 'blog',
       title: 'BlogPost',
       type: 'document',
+      initialValue: {
+        publishAt: new Date().toISOString()
+      },
       fields: [
         {
           name: 'title',
           title: 'Title',
-          type: 'string'
+          type: 'string',
+          validation: (Rule) => { return Rule.required().min(5) }
         },
         {
           name: 'subtitle',
@@ -56,18 +60,21 @@ export default createSchema({
         {
           name: 'publishAt',
           title: 'Publish At',
-          type: 'datetime'
+          type: 'datetime',
+          validation: (Rule) => { return Rule.required() }
         },
         {
           name: 'author',
           title: 'Author',
           type: 'reference',
-          to: [{type: 'author'}]
+          to: [{type: 'author'}],
+          validation: (Rule) => { return Rule.required() }
         },
         {
           name: 'slug',
           title: 'Slug',
-          type: 'slug'
+          type: 'slug',
+          validation: (Rule) => { return Rule.required() }
         }
       ]
     }
