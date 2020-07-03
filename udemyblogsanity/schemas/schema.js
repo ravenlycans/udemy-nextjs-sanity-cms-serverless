@@ -58,6 +58,12 @@ export default createSchema({
           type: 'image'
         },
         {
+          name: 'content',
+          title: 'Post Content',
+          type: 'text',
+          validation: (Rule) => { return Rule.required().min(10)}
+        },
+        {
           name: 'publishAt',
           title: 'Publish At',
           type: 'datetime',
