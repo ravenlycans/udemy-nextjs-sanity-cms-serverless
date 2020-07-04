@@ -1,13 +1,26 @@
 import PageLayout from 'components/PageLayout';
 import {Row, Col } from 'react-bootstrap';
-import { useRouter } from 'next/router';
+import BlockContent from '@sanity/block-content-to-react';
 
 import { getBlogPostBySlug, getAllBlogs } from 'lib/api';
 
 import prettyDate from 'pretty-date-js';
 
+const serializers = {
+    types: {
+        code: ({node: {language, code, filename}}) => {
+            return (
+                <pre data-language={language}>
+                    <code>{code}</code>
+                    <p>{filename}</p>
+                </pre>
+
+            )
+        }
+    }
+}
+
 const BlogDetail = ({blogPost}) => {
-    debugger;
     return (
         <PageLayout className="blog-detail-page">
             <Row>
@@ -32,7 +45,11 @@ const BlogDetail = ({blogPost}) => {
                     }
                 </div>
                 <hr/>
-                {blogPost.content}
+                <BlockContent
+                    imageOptions={{w: 320, h: 240, fit: 'max'}} 
+                    serializers={serializers}
+                    blocks={blogPost.content}
+                />
                 </Col>
             </Row>
         </PageLayout>    

@@ -50,18 +50,56 @@ export default createSchema({
         {
           name: 'subtitle',
           title: 'Subtitle',
-          type: 'string'
+          type: 'string',
+          validation: (Rule) => { return Rule.required() }
         },
         {
           name: 'coverImage',
           title: 'Cover Image',
-          type: 'image'
+          type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              type: 'text',
+              title: 'Description',
+              options: {
+                isHighlighted: true
+              }
+            }
+          ]
         },
         {
           name: 'content',
           title: 'Post Content',
-          type: 'text',
-          validation: (Rule) => { return Rule.required().min(10)}
+          type: 'array',
+          of: [
+            {
+              type: 'block'
+            },
+            {
+              type: 'image',
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'text',
+                  title: 'Description',
+                  options: {
+                    isHighlighted: true
+                  }
+                }
+              ],
+              options: {
+                hotspot: true
+              }
+            },
+            {
+              type: 'code',
+              options: {
+                withFilename: true
+              }
+            }
+          ]
+          
         },
         {
           name: 'publishAt',

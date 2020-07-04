@@ -6,7 +6,6 @@ const blogFields = `
     subtitle,
     'slug': slug.current,
     'coverImage': coverImage.asset->url,
-    content,
     publishAt,
     'author': author->{name, 'avatarUrl': avatar.asset->url},
     _createdAt
@@ -35,7 +34,7 @@ export async function getAllAuthors() {
 
 export async function getBlogPostBySlug(slug) {
     const result = await client
-        .fetch(`*[_type == "blog" && slug.current == $slug]{${blogFields}} | order(publishAt asc)`, {slug})
+        .fetch(`*[_type == "blog" && slug.current == $slug]{${blogFields}, content[]{...,"asset": asset->}} | order(publishAt asc)`, {slug})
         .then(res => res?.[0]);
 
     return result;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import prettyDate from 'pretty-date-js';
 
 
-const CardItem = ({title, subtitle, coverImage, link, publishAt, author}) => {
+const CardItem = ({title, subtitle, coverImage, coverImageAlt, link, publishAt, author}) => {
 
     return (
         <Card className={`fj-card`}>
@@ -23,8 +23,9 @@ const CardItem = ({title, subtitle, coverImage, link, publishAt, author}) => {
                 </Card.Header>
                 <div className="view overlay">
                 <Card.Img
+                    height="150px"
                     src={coverImage}
-                    alt="Card image cap"
+                    alt={coverImageAlt}
                 />
                 </div>
                 <Card.Body>

@@ -28,6 +28,7 @@ export default function Home({blogs, authors}) {
                   title={blog.title}
                   subtitle={blog.subtitle}
                   coverImage={blog.coverImage}
+                  coverImageAlt={blog.coverImageAlt}
                   publishAt={blog.publishAt}
                   author={blog.author}
                   link={{
