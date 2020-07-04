@@ -1,6 +1,7 @@
 import { Card }  from 'react-bootstrap';
 import Link from 'next/link';
 import prettyDate from 'pretty-date-js';
+import { urlFor } from 'lib/api';
 
 
 const CardItem = ({title, subtitle, coverImage, coverImageAlt, link, publishAt, author}) => {
@@ -11,7 +12,7 @@ const CardItem = ({title, subtitle, coverImage, coverImageAlt, link, publishAt, 
                 <Card.Header
                 className="d-flex flex-row">
                 <img
-                    src={author.avatarUrl ? author.avatarUrl : 'https://placekitten.com/50'}
+                    src={urlFor(author.avatarUrl).height(50).fit('max').url()}
                     className="rounded-circle mr-3"
                     height="50px"
                     width="50px"
@@ -23,8 +24,8 @@ const CardItem = ({title, subtitle, coverImage, coverImageAlt, link, publishAt, 
                 </Card.Header>
                 <div className="view overlay">
                 <Card.Img
-                    height="150px"
-                    src={coverImage}
+                    height='150px'
+                    src={urlFor(coverImage).height(150).fit('max').url()}
                     alt={coverImageAlt}
                 />
                 </div>

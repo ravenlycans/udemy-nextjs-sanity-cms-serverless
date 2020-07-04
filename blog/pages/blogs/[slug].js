@@ -1,8 +1,9 @@
 import PageLayout from 'components/PageLayout';
+import HighlightCode from 'components/HighlightCode';
 import {Row, Col } from 'react-bootstrap';
 import BlockContent from '@sanity/block-content-to-react';
 
-import { getBlogPostBySlug, getAllBlogs } from 'lib/api';
+import { getBlogPostBySlug, getAllBlogs, urlFor } from 'lib/api';
 
 import prettyDate from 'pretty-date-js';
 
@@ -10,11 +11,19 @@ const serializers = {
     types: {
         code: ({node: {language, code, filename}}) => {
             return (
-                <pre data-language={language}>
-                    <code>{code}</code>
-                    <p>{filename}</p>
-                </pre>
-
+                <HighlightCode language={language}>
+                    {code}
+                    <div className="code-filename">{filename}</div>
+                </HighlightCode>
+            )
+        },
+        image: ({node: {alt, asset}}) => {
+            debugger
+            return (
+                <div className="blog-image">
+                    <img src={urlFor(asset).height(450).fit('max').url()}/>
+                    <div className="image-alt">{alt}</div>
+                </div>
             )
         }
     }
@@ -28,7 +37,7 @@ const BlogDetail = ({blogPost}) => {
                 <div className="blog-detail-header">
                     <p className="lead mb-0">
                     <img
-                        src={blogPost.author?.avatarUrl}
+                        src={urlFor(blogPost.author?.avatarUrl).height(50).fit('max').url()}
                         className="rounded-circle mr-3"
                         height="50px"
                         width="50px"
@@ -41,12 +50,11 @@ const BlogDetail = ({blogPost}) => {
                     {blogPost.coverImage && 
                         <img
                             className="img-fluid rounded"
-                            src={blogPost.coverImage} alt=""/>
+                            src={urlFor(blogPost.coverImage).height(600).fit('max').url()} alt=""/>
                     }
                 </div>
                 <hr/>
                 <BlockContent
-                    imageOptions={{w: 320, h: 240, fit: 'max'}} 
                     serializers={serializers}
                     blocks={blogPost.content}
                 />
