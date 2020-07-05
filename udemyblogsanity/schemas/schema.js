@@ -66,8 +66,11 @@ export default createSchema({
                 isHighlighted: true
               }
             }
-          ]
-        },
+          ],
+          options: {
+            hotspot: true
+          }
+    },
         {
           name: 'content',
           title: 'Post Content',
@@ -80,6 +83,29 @@ export default createSchema({
               type: 'image',
               fields: [
                 {
+                  title: 'Image Position',
+                  name: 'position',
+                  type: 'string',
+                  options: {
+                    list: [
+                      {
+                        title: 'Center',
+                        value: 'center'
+                      },
+                      {
+                        title: 'Left',
+                        value: 'left'
+                      },
+                      {
+                        title: 'Right',
+                        value: 'right'
+                      }
+                    ],
+                    layout: 'radio',
+                    isHighlighted: true
+                  }
+                },
+                    {
                   name: 'alt',
                   type: 'text',
                   title: 'Description',

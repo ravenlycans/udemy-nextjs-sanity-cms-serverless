@@ -25,7 +25,7 @@ const CardItem = ({title, subtitle, coverImage, coverImageAlt, link, publishAt, 
                 <div className="view overlay">
                 <Card.Img
                     height='150px'
-                    src={urlFor(coverImage).height(150).fit('max').url()}
+                    src={urlFor(coverImage).height(150).fit('clip').crop('center').url()}
                     alt={coverImageAlt}
                 />
                 </div>

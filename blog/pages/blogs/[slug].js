@@ -17,10 +17,10 @@ const serializers = {
                 </HighlightCode>
             )
         },
-        image: ({node: {alt, asset}}) => {
-            debugger
+        image: ({node: {alt, asset, position = 'center'}}) => {
+
             return (
-                <div className="blog-image">
+                <div className={`blog-image blog-image-${position}`}>
                     <img src={urlFor(asset).height(450).fit('max').url()}/>
                     <div className="image-alt">{alt}</div>
                 </div>
