@@ -1,21 +1,26 @@
 import { useState } from 'react';
-import {Row,Col} from 'react-bootstrap';
+import {Row, Col, Button} from 'react-bootstrap';
 import PageLayout from 'components/PageLayout';
 import AuthorIntro from 'components/AuthorIntro';
-import CardItem from 'components/CardItem';
-import CardListItem from 'components/CardListItem';
 import FilteringMenu from 'components/FilteringMenu';
 
 import { getBlogsPaged, getAllAuthors } from 'lib/api';
-import { useGetBlogs, useGetAllAuthors } from 'actions';
+import { useGetAllAuthors } from 'actions';
+import { useGetBlogsPages } from 'actions/pagination';
 
-export default function Home({blogs: IDBlogs, authors: IDAuthors}) {
+export default function Home({blogs, authors: IDAuthors}) {
   const [filter, setFilter] = useState({
-    view: {list: 0 }
+    view: {list: 0 },
+    order: 0
   });
 
   const { data: authors, error: authorsErrors } = useGetAllAuthors(IDAuthors);
-  const { data: blogs, error: blogsErrors } = useGetBlogs(IDBlogs);
+  const { 
+    pages,
+    isLoadingMore,
+    isReachingEnd,
+    loadMore
+   } = useGetBlogsPages({blogs, filter});
 
   return (
     <PageLayout>
@@ -34,43 +39,21 @@ export default function Home({blogs: IDBlogs, authors: IDAuthors}) {
         />
         <hr/>
         <Row className="mb-5">
-            { blogs && 
-              blogs?.map(blog =>
-                filter.view.list ?
-                  <Col key={`${blog.slug}-list`} md="9">
-                    <CardListItem 
-                      title={blog.title}
-                      subtitle={blog.subtitle}
-                      publishAt={blog.publishAt}
-                      author={blog.author}
-                      link={{
-                        href: '/blogs/[slug]',
-                        as:`/blogs/${blog.slug}`
-                      }}
-                    />
-                  </Col>
-                :
-                <Col key={blog.slug} md="4">
-                  <CardItem 
-                    title={blog.title}
-                    subtitle={blog.subtitle}
-                    coverImage={blog.coverImage}
-                    coverImageAlt={blog.coverImageAlt}
-                    publishAt={blog.publishAt}
-                    author={blog.author}
-                    link={{
-                      href:'/blogs/[slug]',
-                      as:`/blogs/${blog.slug}`
-                    }}
-                  />
-              </Col>
-          )
-            }
-            {!blogs && 
-              <Col>
-                <h1 className="text-center">No blogs found!</h1>
-              </Col>
-            }
+          {pages}
+        </Row>
+        <hr />
+        <Row className="mb-9">
+          <Col md="12" className="text-center">
+              { !isReachingEnd && !isLoadingMore &&
+                <Button variant="outline-success" size="lg" onClick={loadMore}>Load More ...</Button>
+              }
+              { isReachingEnd && !isLoadingMore &&
+                <Button variant="outline-secondary" size="lg" disabled={true}>No more ..</Button>
+              }
+              { isLoadingMore && 
+                <Button variant="outline-danger" size="lg" disabled={true}>Loading More ...</Button>
+              }
+          </Col>
         </Row>
     </PageLayout>
   );

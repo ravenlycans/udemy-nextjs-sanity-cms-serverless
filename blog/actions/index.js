@@ -6,8 +6,8 @@ export const useGetHello = () => {
     return useSWR('/api/hello', fetcher);
 }
 
-export const useGetBlogs = (initialData) => {
-    return useSWR(`/api/blogs`, fetcher, {initialData});
+export const useGetBlogs = (initialData, offset, order) => {
+    return useSWR(`/api/blogs?o=${offset || 0}&ord=${order || 0}`, fetcher, {initialData});
 }
 
 export const useGetAllAuthors = (initialData) => {
