@@ -37,6 +37,13 @@ export async function getAllAuthors() {
     return results;
 }
 
+export async function getBlogsPaged(offset = 0, length = 3, order = 'desc') {
+    const results = await client
+        .fetch(`*[_type == "blog"] | order(publishAt ${order})[${offset}...${offset+length}]{${blogFields}}`);
+
+    return results;
+}
+
 export async function getBlogPostBySlug(slug) {
     const result = await client
         .fetch(`*[_type == "blog" && slug.current == $slug]{${blogFields}, content[]{...,"asset": asset->}} | order(publishAt asc)`, {slug})

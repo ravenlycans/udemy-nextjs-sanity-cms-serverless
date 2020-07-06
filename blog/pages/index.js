@@ -6,17 +6,21 @@ import CardItem from 'components/CardItem';
 import CardListItem from 'components/CardListItem';
 import FilteringMenu from 'components/FilteringMenu';
 
-import {getAllBlogs, getAllAuthors} from 'lib/api';
+import { getBlogsPaged, getAllAuthors } from 'lib/api';
+import { useGetBlogs, useGetAllAuthors } from 'actions';
 
-export default function Home({blogs, authors}) {
+export default function Home({blogs: IDBlogs, authors: IDAuthors}) {
   const [filter, setFilter] = useState({
     view: {list: 0 }
   });
 
+  const { data: authors, error: authorsErrors } = useGetAllAuthors(IDAuthors);
+  const { data: blogs, error: blogsErrors } = useGetBlogs(IDBlogs);
+
   return (
     <PageLayout>
-      {
-        authors.map(author =>
+      { authors && 
+        authors?.map(author =>
           <AuthorIntro key={author.name}
             author={author}
           />
@@ -30,8 +34,8 @@ export default function Home({blogs, authors}) {
         />
         <hr/>
         <Row className="mb-5">
-            {
-              blogs.map(blog =>
+            { blogs && 
+              blogs?.map(blog =>
                 filter.view.list ?
                   <Col key={`${blog.slug}-list`} md="9">
                     <CardListItem 
@@ -62,6 +66,11 @@ export default function Home({blogs, authors}) {
               </Col>
           )
             }
+            {!blogs && 
+              <Col>
+                <h1 className="text-center">No blogs found!</h1>
+              </Col>
+            }
         </Row>
     </PageLayout>
   );
@@ -72,7 +81,7 @@ export default function Home({blogs, authors}) {
 // Provides props to your page.
 // It will create a static page.
 export async function getStaticProps() {
-  const blogs = await getAllBlogs();
+  const blogs = await getBlogsPaged();
   const authors = await getAllAuthors();
   return {
     props: {
